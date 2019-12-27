@@ -60,6 +60,7 @@ export default {
 
 .widget {
   margin: 0 0 1em;
+  flex-grow: 1;
 }
 
 @media screen and (min-width: 600px) {
@@ -68,8 +69,8 @@ export default {
   }
 
   .widget {
-    width: 25%;
     margin: 0 1em 1em 0;
+    flex-grow: 0;
   }
 }
 </style>
