@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.4.3",
-    "dashboard-lib": "ssh://git@github.com:alecgunnar/dashboard-lib.git",
+    "dashboard-lib": "https://github.com/alecgunnar/dashboard-lib.git",
     "vue": "^2.6.10"
   },
   "devDependencies": {
