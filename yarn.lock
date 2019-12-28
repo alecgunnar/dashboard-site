@@ -2498,7 +2498,7 @@ cyclist@^1.0.1:
 
 "dashboard-lib@https://github.com/alecgunnar/dashboard-lib.git":
   version "1.0.0"
-  resolved "https://github.com/alecgunnar/dashboard-lib.git#bd21e3576005de5507d25c11f01bfbc5ded94bc4"
+  resolved "https://github.com/alecgunnar/dashboard-lib.git#b4d6335b44657acb1c19a4fc5dace7edd3b48b3c"
   dependencies:
     moment "^2.24.0"
     vue "^2.5.2"

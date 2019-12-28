@@ -45,7 +45,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #2d3436;
   font-size: 16px;
 }
 
@@ -67,11 +67,19 @@ export default {
 }
 
 .dashboard .widget__body {
+  background-color: #fff;
   border: 1px solid #ccc;
   border-top: 0;
   padding: 0.5em;
   border-bottom-left-radius: 0.25em;
   border-bottom-right-radius: 0.25em;
+}
+
+.dashboard .error {
+  background-color: #ff7675;
+  color: #fff;
+  padding: 0.5em;
+  border-radius: 0.25em;
 }
 </style>
 
