@@ -20,8 +20,8 @@ export default {
           {
             name: 'countdown',
             props: {
-              until: '2021-06-13',
-              title: '24 Hours of Le Mans 2021'
+              until: '2020-11-29',
+              title: 'Cruise on Odessey of the Seas'
             }
           },
           {
