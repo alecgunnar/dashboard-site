@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="dashboard">
     <WidgetBoard
       :wrapperClass="$style.wrapper"
       :widgetClass="$style.widget"
@@ -20,9 +20,8 @@ export default {
           {
             name: 'countdown',
             props: {
-              since: '2019-12-27',
               until: '2021-06-13',
-              title: '24 Hours of Le Mans'
+              title: '24 Hours of Le Mans 2021'
             }
           },
           {
@@ -48,6 +47,31 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-size: 16px;
+}
+
+.dashboard .widget {
+  border-radius: 0;
+  border: 0;
+  padding: 0;
+}
+
+.dashboard .widget__header {
+  background-color: #0984e3;
+  color: #fff;
+  margin: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  border: 1px solid #0984e3;
+  border-top-left-radius: 0.25em;
+  border-top-right-radius: 0.25em;
+}
+
+.dashboard .widget__body {
+  border: 1px solid #ccc;
+  border-top: 0;
+  padding: 0.5em;
+  border-bottom-left-radius: 0.25em;
+  border-bottom-right-radius: 0.25em;
 }
 </style>
 
