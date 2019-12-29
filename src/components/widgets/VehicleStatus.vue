@@ -10,7 +10,8 @@ export default {
       mileage: 0,
       location: null,
       asOf: null,
-      error: false
+      error: false,
+      noData: false
     }
   },
   props: {
@@ -21,7 +22,7 @@ export default {
   },
   computed: {
     dataHasLoaded () {
-      return this.asOf !== null
+      return this.noData || this.asOf !== null
     },
     loading () {
       return !this.dataHasLoaded && this.error === false;
@@ -37,9 +38,16 @@ export default {
   },
   methods: {
     dataLoaded (data) {
+      if (data.asOf === null) {
+        this.noData = true
+        return
+      }
+
       this.mileage = data.mileage
       this.location = data.location
       this.asOf = data.asOf
+      this.error = false
+      this.noData = false
     },
     dataFailedToLoad () {
       this.error = true
@@ -60,8 +68,11 @@ export default {
     <template v-slot:header>
       Vehicle Status <span class="extra">&mdash; {{ vin }}</span>
     </template>
+    <div class="warning" v-if="noData">
+      No data available
+    </div>
     <div
-      v-if="dataHasLoaded"
+      v-else-if="dataHasLoaded"
       class="vehicleStatus"
     >
       <div class="vehicleStatus__stat">
@@ -77,7 +88,7 @@ export default {
         <div class="stat__value">{{ asOf | humanReadable }}</div>
       </div>
     </div>
-    <div class="failedToLoad error" v-else-if="error">
+    <div class="error" v-else-if="error">
       Could not load data.
     </div>
   </Wrapper>
@@ -102,9 +113,5 @@ export default {
 .stat__title {
   font-weight: bold;
   flex-grow: 1;
-}
-
-.failedToLoad {
-  color: #A00;
 }
 </style>

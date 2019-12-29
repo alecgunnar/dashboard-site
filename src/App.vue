@@ -85,11 +85,19 @@ export default {
   border-bottom-right-radius: 0.25em;
 }
 
-.dashboard .error {
-  background-color: #ff7675;
-  color: #fff;
+.error,
+.warning {
   padding: 0.5em;
   border-radius: 0.25em;
+}
+
+.error {
+  background-color: #ff7675;
+  color: #fff;
+}
+
+.warning {
+  background-color: #fdcb6e;
 }
 </style>
 
