@@ -23,6 +23,9 @@ export default {
     dataHasLoaded () {
       return this.asOf !== null
     },
+    loading () {
+      return !this.dataHasLoaded && this.error === false;
+    },
     mapsLink () {
       return `http://www.google.com/maps/place/${this.location.lat},${this.location.lng}`
     }
@@ -53,11 +56,14 @@ export default {
 </script>
 
 <template>
-  <Wrapper>
+  <Wrapper :loading="loading">
     <template v-slot:header>
       Vehicle Status <span class="extra">&mdash; {{ vin }}</span>
     </template>
-    <div class="vehicleStatus" v-if="dataHasLoaded">
+    <div
+      v-if="dataHasLoaded"
+      class="vehicleStatus"
+    >
       <div class="vehicleStatus__stat">
         <div class="stat__title">Mileage</div>
         <div class="stat__value">{{ mileage | withCommas }}</div>
