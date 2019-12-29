@@ -1,7 +1,7 @@
-import axios from "axios"
+import client from '.'
 
 export default {
   async getStatus (vin) {
-    return (await axios.get(`${process.env.VUE_APP_MCP_URL}dashboard/vehicles/${vin}`)).data
+    return (await client.getInstance().get(`/dashboard/vehicles/${vin}`)).data
   }
 }

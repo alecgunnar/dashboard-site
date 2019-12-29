@@ -1,7 +1,7 @@
-import axios from "axios"
+import client from '.'
 
 export default {
   async getConfig () {
-    return (await axios.get(`${process.env.VUE_APP_MCP_URL}dashboard`)).data
+    return (await client.getInstance().get('/dashboard')).data
   }
 }
