@@ -1,9 +1,10 @@
 <template>
   <div id="app" class="dashboard">
     <WidgetBoard
+      v-if="config !== null"
       :wrapperClass="$style.wrapper"
       :widgetClass="$style.widget"
-      :config="getConfig()"
+      :config="config"
     />
   </div>
 </template>
@@ -13,9 +14,9 @@ import WidgetBoard from '@/components/WidgetBoard';
 
 export default {
   name: 'app',
-  methods: {
-    getConfig() {
-      return {}
+  data() {
+    return {
+      config: null
     }
   },
   components: {
