@@ -1,22 +1,47 @@
 <template>
-  <div id="app" class="dashboard">
+  <div
+    id="app"
+    class="dashboard"
+    :class="{'dashboard--error': error}"
+  >
     <WidgetBoard
       v-if="config !== null"
       :wrapperClass="$style.wrapper"
       :widgetClass="$style.widget"
       :config="config"
     />
+    <div
+      v-else-if="error"
+      class="error"
+    >
+      Could not load the dashboard
+    </div>
   </div>
 </template>
 
 <script>
-import WidgetBoard from '@/components/WidgetBoard';
+import Client from '@/client/DashboardConfig'
+import WidgetBoard from '@/components/WidgetBoard'
 
 export default {
   name: 'app',
   data() {
     return {
-      config: null
+      config: null,
+      error: false
+    }
+  },
+  mounted() {
+    Client.getConfig()
+      .then(this.configLoaded)
+      .catch(this.configFailedToLoad)
+  },
+  methods: {
+    configLoaded(config) {
+      this.config = config
+    },
+    configFailedToLoad() {
+      this.error = true
     }
   },
   components: {
@@ -89,5 +114,19 @@ export default {
     margin: 0 1em 1em 0;
     flex-grow: 0;
   }
+}
+</style>
+
+<style scoped>
+.error {
+  margin: 0.5em;
+}
+
+.dashboard--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
 }
 </style>
