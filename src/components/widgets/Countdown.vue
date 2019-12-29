@@ -53,7 +53,8 @@ export default {
   },
   filters: {
     floor: (value) => Math.floor(value),
-    pad: (value) => `${value}`.padStart(2, '0')
+    pad: (value) => `${value}`.padStart(2, '0'),
+    humanReadable: (date) => moment(date).format('MMMM D, YYYY h:mm A')
   },
   beforeDestroy () {
     clearInterval(this.interval)
@@ -83,18 +84,25 @@ export default {
         <div class="time__amount">{{ seconds % 60 | floor | pad }}</div> <div class="time__label">seconds</div>
       </div>
     </div>
+    <div class="until">
+      {{ until | humanReadable }}
+    </div>
   </Wrapper>
 </template>
 
 <style scoped>
-  .countdown__time {
-    font-family:'Courier New', Courier, monospace;
-    font-weight: bold;
-    text-align: center;
+  .countdown__time,
+  .until {
     background-color: #dfe6e9;
     padding: 0.5em 0;
     box-sizing: border-box;
     border-radius: 0.25em;
+  }
+
+  .countdown__time {
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-align: center;
     margin: 0 0.5em 0.5em 0;
     width: calc(50% - 0.25em);
     display: inline-block;
@@ -110,5 +118,10 @@ export default {
 
   .time__amount {
     font-size: 1.5em;
+  }
+
+  .until {
+    margin: 0.5em 0 0;
+    text-align: center;
   }
 </style>
