@@ -15,23 +15,7 @@ export default {
   name: 'app',
   methods: {
     getConfig() {
-      return {
-        widgets: [
-          {
-            name: 'countdown',
-            props: {
-              until: '2020-11-29',
-              title: 'Cruise on Odessey of the Seas'
-            }
-          },
-          {
-            name: 'vehicle-status',
-            props: {
-              vin: 'WVWWA7AU2KW223707'
-            }
-          }
-        ]
-      }
+      return {}
     }
   },
   components: {
