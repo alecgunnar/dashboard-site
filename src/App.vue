@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {WidgetBoard} from 'dashboard-lib';
+import WidgetBoard from '@/components/WidgetBoard';
 
 export default {
   name: 'app',
