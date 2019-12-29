@@ -1,5 +1,7 @@
+import axios from "axios"
+
 export default {
-  async getStatus () {
-    throw new Error('No API')
+  async getStatus (vin) {
+    return (await axios.get(`//localhost:8081/dashboard/vehicle/${vin}`)).data
   }
 }

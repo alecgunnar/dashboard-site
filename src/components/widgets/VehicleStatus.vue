@@ -1,6 +1,7 @@
 <script>
 import Client from '../../client/VehicleStatus'
 import Wrapper from './Wrapper'
+import moment from 'moment'
 
 export default {
   name: 'Countdown',
@@ -27,7 +28,7 @@ export default {
     }
   },
   mounted () {
-    Client.getStatus()
+    Client.getStatus(this.vin)
       .then(this.dataLoaded)
       .catch(this.dataFailedToLoad)
   },
@@ -40,6 +41,10 @@ export default {
     dataFailedToLoad () {
       this.error = true
     }
+  },
+  filters: {
+    humanReadable: (date) => moment(date).format('MMMM D, YYYY h:mm A'),
+    withCommas: new Intl.NumberFormat('en-US').format
   },
   components: {
     Wrapper
@@ -55,11 +60,15 @@ export default {
     <div class="vehicleStatus" v-if="dataHasLoaded">
       <div class="vehicleStatus__stat">
         <div class="stat__title">Mileage</div>
-        <div class="stat__value">{{ mileage }}</div>
+        <div class="stat__value">{{ mileage | withCommas }}</div>
       </div>
       <div class="vehicleStatus__stat">
         <div class="stat__title">Current Location</div>
-        <div class="stat__value"><a :href="mapsLink" target="_blank">See on a map &rarr;</a></div>
+        <div class="stat__value"><a :href="mapsLink" target="_blank">See on a map</a></div>
+      </div>
+      <div class="vehicleStatus__stat">
+        <div class="stat__title">Last Updated</div>
+        <div class="stat__value">{{ asOf | humanReadable }}</div>
       </div>
     </div>
     <div class="failedToLoad error" v-else-if="error">
@@ -71,11 +80,13 @@ export default {
 <style scoped>
 .vehicleStatus {
   display: flex;
+  flex-direction: column;
 }
 
 .vehicleStatus__stat {
-  margin: 0 0 1em;
+  margin: 0 0 0.5em;
   flex-grow: 1;
+  display: flex;
 }
 
 .vehicleStatus__stat:last-of-type {
@@ -84,6 +95,7 @@ export default {
 
 .stat__title {
   font-weight: bold;
+  flex-grow: 1;
 }
 
 .failedToLoad {
