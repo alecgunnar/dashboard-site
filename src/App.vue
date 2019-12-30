@@ -20,27 +20,43 @@
 </template>
 
 <script>
-import Client from '@/client/DashboardConfig'
+import Client from '@/client'
+import AuthClient from '@/client/Auth'
+import DashClient from '@/client/DashboardConfig'
 import WidgetBoard from '@/components/WidgetBoard'
 
 export default {
   name: 'app',
   data() {
     return {
+      authed: false,
       config: null,
       error: false
     }
   },
-  mounted() {
-    Client.getConfig()
-      .then(this.configLoaded)
-      .catch(this.configFailedToLoad)
+  created() {
+    AuthClient.getToken()
+      .then(this.tokenLoaded)
+      .catch(this.failedToLoad)
+  },
+  watch: {
+    authed(isAuthed) {
+      if (!isAuthed) return
+
+      DashClient.getConfig()
+        .then(this.configLoaded)
+        .catch(this.failedToLoad)
+    }
   },
   methods: {
+    tokenLoaded({token}) {
+      this.authed = true
+      Client.setAuthToken(token)
+    },
     configLoaded(config) {
       this.config = config
     },
-    configFailedToLoad() {
+    failedToLoad() {
       this.error = true
     }
   },
