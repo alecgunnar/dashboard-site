@@ -34,8 +34,8 @@ export default {
       error: false
     }
   },
-  created() {
-    AuthClient.getToken()
+  mounted () {
+    AuthClient.getToken('sample', 'credentials')
       .then(this.tokenLoaded)
       .catch(this.failedToLoad)
   },
