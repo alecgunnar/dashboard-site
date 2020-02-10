@@ -3,6 +3,7 @@
     id="app"
     class="dashboard"
     :class="{'dashboard--error': error}"
+    v-if="authed"
   >
     <WidgetBoard
       v-if="config !== null"
@@ -17,13 +18,22 @@
       Could not load the dashboard
     </div>
   </div>
+  <div
+    class="signInWrapper"
+    v-else
+  >
+    <SignIn
+      class="signIn"
+      @authed="tokenLoaded"
+    />
+  </div>
 </template>
 
 <script>
 import Client from '@/client'
-import AuthClient from '@/client/Auth'
 import DashClient from '@/client/DashboardConfig'
 import WidgetBoard from '@/components/WidgetBoard'
+import SignIn from '@/components/SignIn'
 
 export default {
   name: 'app',
@@ -33,11 +43,6 @@ export default {
       config: null,
       error: false
     }
-  },
-  mounted () {
-    AuthClient.getToken('sample', 'credentials')
-      .then(this.tokenLoaded)
-      .catch(this.failedToLoad)
   },
   watch: {
     authed(isAuthed) {
@@ -49,7 +54,7 @@ export default {
     }
   },
   methods: {
-    tokenLoaded({token}) {
+    tokenLoaded(token) {
       this.authed = true
       Client.setAuthToken(token)
     },
@@ -61,7 +66,8 @@ export default {
     }
   },
   components: {
-    WidgetBoard
+    WidgetBoard,
+    SignIn
   }
 }
 </script>
@@ -152,5 +158,20 @@ export default {
   justify-content: center;
   height: 100vh;
   width: 100vw;
+}
+
+.signInWrapper {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.signIn {
+  width: 100%;
+  padding: 0.5em;
+  box-sizing: border-box;
 }
 </style>
