@@ -3,7 +3,7 @@
     id="app"
     class="dashboard"
     :class="{'dashboard--error': error}"
-    v-if="authed"
+    v-if="isAuthenticated"
   >
     <WidgetBoard
       v-if="config !== null"
@@ -22,10 +22,7 @@
     class="signInWrapper"
     v-else
   >
-    <SignIn
-      class="signIn"
-      @authed="tokenLoaded"
-    />
+    <SignIn class="signIn" />
   </div>
 </template>
 
@@ -34,19 +31,24 @@ import Client from '@/client'
 import DashClient from '@/client/DashboardConfig'
 import WidgetBoard from '@/components/WidgetBoard'
 import SignIn from '@/components/SignIn'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'app',
   data() {
     return {
-      authed: false,
       config: null,
       error: false
     }
   },
+  computed: {
+    ...mapGetters(['isAuthenticated', 'token'])
+  },
   watch: {
-    authed(isAuthed) {
+    isAuthenticated(isAuthed) {
       if (!isAuthed) return
+
+      Client.setAuthToken(this.token)
 
       DashClient.getConfig()
         .then(this.configLoaded)
@@ -54,10 +56,6 @@ export default {
     }
   },
   methods: {
-    tokenLoaded(token) {
-      this.authed = true
-      Client.setAuthToken(token)
-    },
     configLoaded(config) {
       this.config = config
     },

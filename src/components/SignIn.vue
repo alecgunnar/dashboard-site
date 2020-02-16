@@ -1,10 +1,10 @@
 <template>
   <form
     class="signIn"
-    @submit="signIn"
+    @submit="attemptToSignIn"
   >
     <div
-      v-if="error"
+      v-if="submitFailed"
       class="error"
     >
       Your credentials were not accepted.
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import AuthClient from '@/client/Auth'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'SignIn',
@@ -44,29 +44,31 @@ export default {
     return {
       username: '',
       password: '',
-      error: false
+      emptyInput: false
     };
   },
+  computed: {
+    ...mapGetters(['credentialsWereRejected']),
+    submitFailed() {
+      return this.emptyInput || this.credentialsWereRejected
+    }
+  },
   methods: {
-    signIn(e) {
+    ...mapActions(['signIn']),
+    attemptToSignIn(e) {
       e.preventDefault();
 
+      this.emptyInput = false
+
       if (this.username === '' || this.password === '') {
-        this.error = true
+        this.emptyInput = true
         return
       }
 
-      this.error = false
-
-      AuthClient.getToken(this.username, this.password)
-        .then(this.credentialsAccepted)
-        .catch(this.credentialsRejected)
-    },
-    credentialsAccepted({token}) {
-      this.$emit('authed', token)
-    },
-    credentialsRejected() {
-      this.error = true
+      this.signIn({
+        username: this.username,
+        password: this.password
+      })
     }
   }
 }
