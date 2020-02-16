@@ -9,6 +9,9 @@ export default {
     tokenReceived(state, {token}) {
       state.token = token
     },
+    loadToken(state, token) {
+      state.token = token
+    },
     clearToken(state) {
       state.token = null
     },

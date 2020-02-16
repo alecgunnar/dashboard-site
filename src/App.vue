@@ -45,17 +45,23 @@ export default {
     ...mapGetters(['isAuthenticated', 'token'])
   },
   watch: {
-    isAuthenticated(isAuthed) {
-      if (!isAuthed) return
+    isAuthenticated() {
+      this.loadData()
+    }
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    loadData() {
+      if (!this.isAuthenticated) return
 
       Client.setAuthToken(this.token)
 
       DashClient.getConfig()
         .then(this.configLoaded)
         .catch(this.failedToLoad)
-    }
-  },
-  methods: {
+    },
     configLoaded(config) {
       this.config = config
     },
