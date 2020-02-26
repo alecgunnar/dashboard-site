@@ -22,7 +22,7 @@
     class="signInWrapper"
     v-else
   >
-    <SignIn class="signIn" />
+    <SignIn :class="$style.signIn" />
   </div>
 </template>
 
@@ -139,6 +139,12 @@ export default {
   flex-grow: 1;
 }
 
+.signIn {
+  width: 100%;
+  padding: 0.5em;
+  box-sizing: border-box;
+}
+
 @media screen and (min-width: 600px) {
   .wrapper {
     flex-direction: row;
@@ -147,6 +153,10 @@ export default {
   .widget {
     margin: 0 1em 1em 0;
     flex-grow: 0;
+  }
+
+  .signIn {
+    width: 400px;
   }
 }
 </style>
@@ -170,12 +180,6 @@ export default {
   height: 100vh;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-}
-
-.signIn {
-  width: 100%;
-  padding: 0.5em;
   box-sizing: border-box;
 }
 </style>
