@@ -9,9 +9,6 @@ export default {
     tokenReceived(state, {token}) {
       state.token = token
     },
-    loadToken(state, token) {
-      state.token = token
-    },
     clearToken(state) {
       state.token = null
     },
@@ -29,6 +26,15 @@ export default {
       AuthClient.getToken(username, password)
         .then((token) => commit('tokenReceived', token))
         .catch(() => credentialsRejected())
+    },
+    loadToken({commit}, token) {
+      const claims = token.split('.')[1]
+      const parsedClaims = JSON.parse(atob(claims))
+      const expiresAt = parsedClaims['exp'] * 1000
+
+      if (expiresAt < Date.now())return commit('clearToken')
+
+      commit('tokenReceived', token)
     }
   },
   getters: {

@@ -1,7 +1,7 @@
 export default (store) => {
   const token = window.localStorage.getItem('token')
 
-  if (token) store.commit('loadToken', token)
+  if (token) store.dispatch('loadToken', token)
 
   store.subscribe((mutation, state) => {
     if (mutation.type === 'tokenReceived')
