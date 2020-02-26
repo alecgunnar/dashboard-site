@@ -34,7 +34,7 @@ export default {
 
       if (expiresAt < Date.now())return commit('clearToken')
 
-      commit('tokenReceived', token)
+      commit('tokenReceived', {token})
     }
   },
   getters: {
